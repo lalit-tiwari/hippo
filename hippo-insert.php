@@ -77,24 +77,17 @@ $table_name = $wpdb->prefix . "hipporegistration";
  
 $ch = curl_init();
 
-$query3 = "Select * from wp_tokendetails where auth_token = '$auth_token' and api_url = '$api_url'";
-
 $sql_token = "SELECT id, auth_token, api_url FROM wp_tokendetails";
 $result_token = $con->query($sql_token);
 
-if ($result_token->num_rows > 0) {
-    // output data of each row
-    while($row = $result_token->fetch_assoc()) {
-        echo "<br> id: ". $row["id"]. " - auth_token: ". $row["auth_token"]. " " . $row["api_url"] . "<br>";
-    }
-} else {
-    echo "0 results";
-}
+//print_r(mysqli_fetch_array($result_token));
+$result= mysqli_fetch_array($result_token);
+ $api_url= $result['api_url'];
+ $token= $result['auth_token'];
 
- //$result3 = $con->query($query3);
-  
-    $url = "https://api.staging.myhippo.io/v1/herd/quote";
-    $dataArray = array('auth_token' => 'zcXbR1NoE0zoozyuqAa75s5gBATbeiUsbkGhvb5toGiNWUdDjIUkAU5XgDwCRTet',
+	
+	$url = $api_url;
+    $dataArray = array('auth_token' => $token,
 		 'street'=>$street_address,
 		 'city'=>$city,
 		 'state'=>$state,
